@@ -1,7 +1,9 @@
 import socket
 import sys
 import random
+import os
 
+import PyQt5
 from PyQt5.QtCore import Qt, QEventLoop
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget
 
