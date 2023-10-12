@@ -1,3 +1,6 @@
 /TEST_PLACE.py
 /.idea
 /.dist
+*.pyc
+*.xml
+*.xml

@@ -1,5 +1,6 @@
 import socket
 import sys
+import threading
 
 from PyQt5.QtCore import Qt, QEventLoop
 from PyQt5.QtGui import QPixmap
@@ -19,16 +20,29 @@ class PictureReceiver(QMainWindow, Ui_PictureReceiver):
         super().__init__()
         self.setupUi(self)
 
+    def startup(self):
+        rec = threading.Thread(target=self.rectime)
+        rec.start()
+
     def rectime(self):
-        picnum = int(SOCKET.recv(1024).decode())
-        print("num got")
+        while True:
+            try:
+                picnum = int(SOCKET.recv(1024).decode())
+                print("num got")
+                self.picchange(picnum)
+            except ValueError:
+                break
+        print("disconnect")
+        self.PR_Screen.setText("Connection is Terminated. Please restart.")
+
+    def picchange(self, picnum):
         pixmap = QPixmap(PICS[picnum])
         self.PR_Screen.setPixmap(pixmap)
 
-    def keyPressEvent(self, event):
-        if event.key() == Qt.Key_Return:
-            print("charge")
-            self.rectime()
+    # def keyPressEvent(self, event):
+    #     if event.key() == Qt.Key_Return:
+    #         print("charge")
+    #         self.rectime()
 
     def jotto(self):
         a = PR_Entrance()
@@ -84,7 +98,7 @@ if __name__ == '__main__':
     if a < 0:
         sys.exit()
     form.show()
-    form.rectime()
+    form.startup()
     sys.excepthook = except_hook
     sys.exit(app.exec())
 
