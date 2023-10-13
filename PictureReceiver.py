@@ -39,11 +39,6 @@ class PictureReceiver(QMainWindow, Ui_PictureReceiver):
         pixmap = QPixmap(PICS[picnum])
         self.PR_Screen.setPixmap(pixmap)
 
-    # def keyPressEvent(self, event):
-    #     if event.key() == Qt.Key_Return:
-    #         print("charge")
-    #         self.rectime()
-
     def jotto(self):
         a = PR_Entrance()
         a.setAttribute(Qt.WA_DeleteOnClose)
@@ -81,6 +76,7 @@ class PR_Entrance(QWidget, Ui_HostIn):
                 self.ErrorPhrase.setText("Timeout or wrong IP. Try again.")
             else:
                 self.ErrorPhrase.setText("Wrong IP. Try again.")
+            HOST = None
 
 
 def except_hook(cls, exception, traceback):
